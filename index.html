@@ -1,1 +1,267 @@
-<h1>Hello world!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>nyashkkk - why u read this</title>
+<meta name="description" content="nyashkkk (nullray64): Linux, network infrastructure, homelabs, music and audio DSP.">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="canonical" href="https://nyashkkk.space/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="nyashkkk">
+<meta property="og:description" content="Low-level hardware and software, music, Linux and network infrastructure.">
+<meta property="og:url" content="https://nyashkkk.space/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230d0d0f'/%3E%3Cpath d='M0 55h22l8-30 14 50 12-40 8 20h36' fill='none' stroke='%23e0263f' stroke-width='7'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0d0f; --panel:#141417; --line:#26262b; --paper:#ecebe8; --mute:#8d8d95;
+  --red:#e0263f; --red-deep:#8f1426;
+  --display:"Oswald","Arial Narrow",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem;background:var(--ink);font-size:max(100%,1.25vw)}
+body{background:var(--ink);color:var(--paper);font:400 .95rem/1.8 var(--mono);
+  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);}
+a{color:inherit;text-decoration-color:var(--red);text-underline-offset:.25em}
+a:hover{color:var(--red)}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.wrap{max-width:58rem;margin:0 auto;padding:0 2rem}
+.prose{max-width:52ch}
+.muted{color:var(--mute)}
+
+nav{position:sticky;top:0;z-index:10;background:rgba(13,13,15,.9);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+nav .wrap{display:flex;gap:2rem;align-items:center;height:3.75rem;overflow-x:auto;white-space:nowrap}
+nav .me{font:600 1.2rem var(--display);letter-spacing:.02em;text-decoration:none;margin-right:auto;color:var(--paper)}
+nav .me i{color:var(--red);font-style:normal}
+nav a:not(.me){font-size:.8rem;color:var(--mute);text-decoration:none}
+nav a:not(.me):hover{color:var(--paper)}
+
+h1,h2{font-family:var(--display);font-weight:600;line-height:1.05;letter-spacing:.01em}
+h1{font-weight:700;font-size:clamp(3.25rem,9vw,6rem);margin:1.25rem 0 1.5rem}
+h1 span{color:var(--red)}
+h2{font-size:clamp(1.7rem,3vw,2.2rem);margin-bottom:2.25rem}
+section{padding:7rem 0}
+
+/* hero */
+.hero{position:relative;overflow:hidden;min-height:calc(100svh - 3.75rem);display:flex;flex-direction:column;justify-content:center;padding:4rem 0 8rem}
+.hero .wrap{position:relative;z-index:1;width:100%}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 28%,#000 72%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 28%,#000 72%,transparent 100%)}
+.prompt{color:var(--mute);font-size:.85rem}
+.prompt b{color:var(--red);font-weight:500}
+.cursor{display:inline-block;width:.6ch;height:1.1em;background:var(--red);vertical-align:-.2em;margin-left:.4ch;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.role{font-size:1.05rem;max-width:44ch}
+.boot>*{opacity:0;transform:translateY(8px);animation:boot .6s ease forwards}
+.boot>*:nth-child(2){animation-delay:.12s}.boot>*:nth-child(3){animation-delay:.24s}.boot>*:nth-child(4){animation-delay:.36s}
+@keyframes boot{to{opacity:1;transform:none}}
+
+/* about */
+.about{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem}
+.facts{list-style:none;display:grid;gap:2rem}
+.facts li{padding-left:1.25rem;border-left:2px solid var(--red)}
+.facts b{display:block;font-weight:500;margin-bottom:.15rem}
+.facts span{color:var(--mute)}
+
+/* stack */
+.stack{display:grid}
+.row{display:grid;grid-template-columns:11rem 1fr;gap:1.5rem;align-items:baseline;padding:1.75rem 0;border-bottom:1px solid var(--line)}
+.row:first-child{border-top:1px solid var(--line)}
+.row dt{color:var(--mute);font-size:.85rem}
+.tags{display:flex;flex-wrap:wrap;gap:.6rem;list-style:none}
+.tags li{border:1px solid var(--line);background:var(--panel);padding:.15rem .75rem;font-size:.85rem}
+.tags li.hot{border-color:var(--red-deep)}
+
+/* lists (releases, notes) */
+.list{list-style:none;border-top:1px solid var(--line)}
+.list li{border-bottom:1px solid var(--line)}
+.list a{display:grid;grid-template-columns:1fr auto;gap:.25rem 1.5rem;padding:1.25rem .25rem;text-decoration:none}
+.list a:hover{background:var(--panel)}
+.list .name{font-weight:500}
+.list a:hover .name{color:var(--red)}
+.list .desc{grid-column:1/-1;color:var(--mute);font-size:.85rem;order:3}
+.list .meta{color:var(--mute);font-size:.8rem}
+.empty{color:var(--mute);padding:1.25rem .25rem}
+.split{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem}
+
+.btn{display:inline-block;border:1px solid var(--line);background:var(--panel);padding:.75rem 1.4rem;text-decoration:none}
+.btn:hover{border-color:var(--red);color:var(--paper);background:var(--red-deep)}
+.btn.main{border-color:var(--red);background:var(--red);color:#fff}
+.btn.main:hover{background:var(--red-deep)}
+.btns{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2rem}
+
+.rail{position:fixed;right:1.25rem;top:50%;transform:translateY(-50%);width:3px;height:30vh;background:var(--line);z-index:5}
+.rail i{position:absolute;inset:0;background:var(--red);transform-origin:bottom;transform:scaleY(0)}
+footer{border-top:1px solid var(--line);padding:2.5rem 0 calc(2.5rem + env(safe-area-inset-bottom));color:var(--mute);font-size:.8rem}
+
+@media (max-width:760px){
+  .wrap{padding:0 1.5rem}
+  .about,.split{grid-template-columns:1fr;gap:3rem}
+  .row{grid-template-columns:1fr;gap:.75rem}
+  section{padding:4.5rem 0}
+  .hero{padding:3rem 0 6rem}
+  .rail{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}.boot>*{animation:none;opacity:1;transform:none}.cursor{animation:none}
+}
+</style>
+</head>
+<body>
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="me" href="#top">nyashkkk<i>_</i></a>
+    <a href="#about">About</a><a href="#stack">Stack</a><a href="#projects">Projects</a>
+    <a href="#audio">Audio</a><a href="#notes">Notes</a><a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<main id="top">
+  <header class="hero">
+    <canvas id="scope" aria-hidden="true"></canvas>
+    <div class="wrap boot">
+      <p class="prompt"><b>nullray64@home</b>:~$ whoami<span class="cursor" aria-hidden="true"></span></p>
+      <h1>nyash<span>kkk</span></h1>
+      <p class="role">low-level hardware&amp;software enthusiast, musician, gamer, dreamer</p>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="wrap about">
+      <div>
+        <h2>About</h2>
+        <p class="prose muted">I like systems that stay up under load, and the tools that make them observable. Outside of servers I build with sound and radio hardware.</p>
+      </div>
+      <ul class="facts">
+        <li><b>Linux and administration</b><span>Linux environments, system administration and network infrastructure.</span></li>
+        <li><b>Networks and load</b><span>Network services, high-load setups and homelabs.</span></li>
+        <li><b>Music and sound</b><span>Writing music on guitar and keys, audio signal processing, DSP plugins and sound experiments.</span></li>
+        <li><b>Radio and hardware</b><span>Radio communications and smart things on ESP32</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="wrap">
+      <h2>Stack</h2>
+      <dl class="stack">
+        <div class="row"><dt>Systems</dt><dd><ul class="tags"><li class="hot">Linux</li><li>Unix</li><li>Git</li><li>Kubernetes</li></ul></dd></div>
+        <div class="row"><dt>Languages</dt><dd><ul class="tags"><li>C</li><li>Go</li><li>Bash</li><li>LISP</li><li>Python</li></ul></dd></div>
+        <div class="row"><dt>AI and automation</dt><dd><ul class="tags"><li>Python</li><li>AI integrations</li></ul></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <h2>Projects</h2>
+      <p class="prose muted">Code, configs and experiments live on GitHub.</p>
+      <div class="btns"><a class="btn main" href="https://github.com/nullray64">github.com/nullray64</a></div>
+    </div>
+  </section>
+
+  <section id="audio">
+    <div class="wrap split">
+      <div>
+        <h2>Audio</h2>
+        <p class="prose muted">I write music on a Rockdale Stars HSS BK guitar and an Arturia MiniLab, then shape it with signal processing and DSP plugins. I also experiment with sounds from the world around me and turn them into material.</p>
+        <ul class="tags" style="margin-top:2rem"><li class="hot">Rockdale Stars HSS BK</li><li class="hot">Arturia MiniLab</li><li>DSP plugins</li><li>Sound experiments</li></ul>
+      </div>
+      <ul class="list" id="releases"></ul>
+    </div>
+  </section>
+
+  <section id="notes">
+    <div class="wrap">
+      <h2>Notes</h2>
+      <ul class="list" id="posts"></ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p class="prose muted">Email is the fastest way to reach me.</p>
+      <div class="btns">
+        <a class="btn main" href="mailto:nyashkkk@duck.com">nyashkkk@duck.com</a>
+        <a class="btn" href="https://github.com/nullray64">GitHub</a>
+        <a class="btn" href="https://steamcommunity.com/id/nullray64/">Steam</a>
+        <a class="btn" href="https://instagram.com/nullray64">Instagram</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© <span id="y">2026</span> nyashkkk. Static site, hosted on GitHub Pages.</div></footer>
+
+<div class="rail" aria-hidden="true"><i id="rail"></i></div>
+
+<script>
+/* ---- Content you can edit: add entries and push ---- */
+const RELEASES = [
+  // { title: "Track name", desc: "Short note", url: "https://…", date: "2026" }
+];
+const POSTS = [
+  // { title: "Post title", desc: "One line summary", url: "/notes/post.html", date: "2026-11-03" }
+];
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function fill(id, items, emptyText){
+  const el = document.getElementById(id);
+  if(!items.length){ el.innerHTML = '<li class="empty">'+esc(emptyText)+'</li>'; return; }
+  el.innerHTML = items.map(i =>
+    '<li><a href="'+esc(i.url)+'"><span class="name">'+esc(i.title)+'</span><span class="meta">'+esc(i.date||"")+'</span><span class="desc">'+esc(i.desc||"")+'</span></a></li>'
+  ).join("");
+}
+document.getElementById("y").textContent = new Date().getFullYear();
+fill("releases", RELEASES, "Releases will be listed here.");
+fill("posts", POSTS, "The first notes are on the way.");
+
+/* ---- Hero background: slow layered signal waves (decorative) ---- */
+(function(){
+  const cv = document.getElementById("scope"), hero = cv.parentElement, ctx = cv.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const layers = [
+    {a:.085,f:2.2,s: 1.0,o:-.03,c:"rgba(224,38,63,.95)",w:2,g:10},
+    {a:.070,f:3.1,s:-.7, o: .00,c:"rgba(224,38,63,.28)",w:1.5,g:0},
+    {a:.055,f:1.5,s: .5, o: .04,c:"rgba(236,235,232,.14)",w:1.5,g:0},
+    {a:.045,f:4.3,s:-1.2,o: .08,c:"rgba(236,235,232,.07)",w:1,g:0}
+  ];
+  let w, h, t = 0, run = true;
+  function size(){ const d = devicePixelRatio || 1; w = hero.clientWidth; h = hero.clientHeight;
+    cv.width = w*d; cv.height = h*d; ctx.setTransform(d,0,0,d,0,0); }
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    for(const L of layers){
+      ctx.strokeStyle = L.c; ctx.lineWidth = L.w; ctx.shadowColor = L.c; ctx.shadowBlur = L.g;
+      ctx.beginPath();
+      for(let x=0;x<=w;x+=3){
+        const n = x/w, p = n*Math.PI*2*L.f, env = .35 + .65*Math.sin(n*Math.PI);
+        const y = h*(.72+L.o) + h*L.a*env*(Math.sin(p+t*L.s) + .5*Math.sin(p*2.3-t*L.s*1.4));
+        x ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
+      }
+      ctx.stroke();
+    }
+    ctx.shadowBlur = 0; t += .012;
+    if(run && !still) requestAnimationFrame(frame);
+  }
+  size(); frame();
+  addEventListener("resize", () => { size(); if(still) frame(); });
+  new IntersectionObserver(([e]) => { const was = run; run = e.isIntersecting; if(run && !was && !still) frame(); }).observe(hero);
+})();
+
+/* ---- Scroll level meter ---- */
+(function(){
+  const bar = document.getElementById("rail"); let tick = false;
+  function upd(){ const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = "scaleY(" + (max > 0 ? Math.min(1, scrollY/max) : 0) + ")"; tick = false; }
+  addEventListener("scroll", () => { if(!tick){ tick = true; requestAnimationFrame(upd); } }, {passive:true});
+  upd();
+})();
+</script>
+</body>
+</html>
